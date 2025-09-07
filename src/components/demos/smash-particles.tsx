@@ -11,7 +11,10 @@ import { cn } from '@/utils/cn'
  */
 export const SmashParticles = () => {
   const stroke = useKeyStroke()
-  const showPlaceholder = !useDebouncedFlag(stroke, { debounceTime: 2_000 })
+  const showPlaceholder = !useDebouncedFlag(stroke, {
+    debounceTime: 2_000,
+    ignoreInitial: true,
+  })
 
   return (
     <div className="relative h-dvh w-full bg-black">
@@ -50,17 +53,26 @@ const useKeyStroke = () => {
   return stroke
 }
 
-const useDebouncedFlag = <T,>(trigger: T, { debounceTime = 2_000 }) => {
+const useDebouncedFlag = <T,>(
+  trigger: T,
+  { debounceTime = 2_000, ignoreInitial = false }
+) => {
   const [flag, setFlag] = useState(false)
 
   const debouncedFlagChange = useDebounce(() => {
     setFlag(false)
   }, debounceTime)
 
+  const isInitialRef = useRef(true)
   useEffect(() => {
+    if (ignoreInitial && isInitialRef.current) {
+      isInitialRef.current = false
+      return
+    }
+
     setFlag(true)
     debouncedFlagChange()
-  }, [trigger, debouncedFlagChange])
+  }, [ignoreInitial, trigger, debouncedFlagChange])
 
   return flag
 }
@@ -122,7 +134,13 @@ const ParticleBursts = ({ trigger }: { trigger: { stroke: string } }) => {
   const baseCamPosRef = useRef<THREE.Vector3>(null)
   const shakeMagnitudeRef = useRef(0)
 
+  const isInitialRef = useRef(true)
   useEffect(() => {
+    if (isInitialRef.current) {
+      isInitialRef.current = false
+      return
+    }
+
     /**
      * 파티클 버스트 생성
      */
