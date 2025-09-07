@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "publish": "pnpm build && gh-pages -d dist",
+    "gh-pages": "pnpm build && gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview"
   },
