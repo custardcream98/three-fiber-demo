@@ -21,9 +21,18 @@ export const Layout = () => {
                 cn(navItemBase, isActive ? navItemActive : navItemInactive)
               }
               end
-              to="/"
+              to="/smash-particles"
             >
               Smash Particles
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                cn(navItemBase, isActive ? navItemActive : navItemInactive)
+              }
+              end
+              to="/get-pi"
+            >
+              Get Pi
             </NavLink>
           </div>
         </div>
