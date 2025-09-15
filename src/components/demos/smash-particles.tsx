@@ -17,7 +17,7 @@ export const SmashParticles = () => {
   })
 
   return (
-    <div className="relative h-dvh w-full bg-black">
+    <div className="relative h-dvh w-full">
       <Canvas camera={{ fov: 50, position: [0, 0, 5] }}>
         <ParticleBursts trigger={stroke} />
       </Canvas>
